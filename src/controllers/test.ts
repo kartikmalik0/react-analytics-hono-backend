@@ -1,4 +1,5 @@
 import { Context } from "hono";
+import { getPrisma } from "../db/prisma";
 
 // Dummy user data for testing
 const dummyUsers = [
@@ -11,7 +12,7 @@ const dummyUsers = [
     // Extract query parameters from the request (with default values if not provided)
     const page = c.req.query().page ?? '1'; // Defaults to page 1
     const perPage = c.req.query().perPage ?? '10'; // Defaults to 10 items per page
-  
+
     // Convert the extracted values to numbers for proper arithmetic
     const pageNumber = Number(page);
     const perPageNumber = Number(perPage);

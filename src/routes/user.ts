@@ -1,41 +1,8 @@
 import { Hono } from "hono";
-import * as userController from "../controllers/test";
+import * as userController from "../controllers/createUser";
 
-// Create a new Hono app for user routes
 const userRoutes = new Hono();
 
-/**
- * Route: GET /
- * Description: Fetch all users with optional pagination.
- * Controller: userController.getAllUsers
- * Example Request: GET /users?page=1&perPage=10
- */
-userRoutes.get("/", userController.getAllUsersDummy);
+userRoutes.post("/", userController.createUser);
 
-/**
- * Route: GET /:id
- * Description: Fetch a single user by their ID.
- * Controller: userController.getUserById
- * Example Request: GET /users/1
- */
-userRoutes.get("/:id", userController.getUserByIdDummy);
-
-/**
- * Route: PUT /:id
- * Description: Update a user's information by their ID.
- * Controller: userController.updateUser
- * Example Request: PUT /users/1
- * Body: JSON containing updated user data.
- */
-userRoutes.put("/:id", userController.updateUserDummy);
-
-/**
- * Route: DELETE /:id
- * Description: Delete a user by their ID.
- * Controller: userController.deleteUser
- * Example Request: DELETE /users/1
- */
-userRoutes.delete("/:id", userController.deleteUserDummy);
-
-// Export the userRoutes to be used in the main app
-export { userRoutes };
+export {userRoutes}

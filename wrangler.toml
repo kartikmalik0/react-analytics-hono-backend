@@ -3,9 +3,12 @@ main = "src/index.ts"
 compatibility_date = "2024-10-14"
 compatibility_flags = [ "nodejs_compat" ]
 
-# [vars]
-# MY_VAR = "my-variable"
+[vars]
+MY_VAR = "my-variable"
 
+DIRECT_URL="postgresql://neondb_owner:1jzUiBflHx3C@ep-bitter-waterfall-a1ff8k7v.ap-southeast-1.aws.neon.tech/neondb?sslmode=require"
+
+DATABASE_URL="prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiMzk3ZGQ1MmMtNGZiOC00ZjZhLTgzOWEtYWI2M2FiMDRkNzFhIiwidGVuYW50X2lkIjoiYjgyMzU3Yjk0YmEzNzMzYjkxYTM3YmNiYjNlNzc5NmM5M2RmN2MwMzVkNjFhMTZkOTZmOWY1NGIyYzlkMzMxYiIsImludGVybmFsX3NlY3JldCI6ImUxZjQ2ZGVjLTU1MjAtNDNlOC04NGMyLTQ5ZmQ5ZTdmNmU4MiJ9.4F3d4CFHfp19iOyRepYWh_9WyiSjjycIDsOhIwBScZ0"
 # [[kv_namespaces]]
 # binding = "MY_KV_NAMESPACE"
 # id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
