@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { testUserRoutes } from "./routes/testuser";
-import { userRoutes } from "./routes/user";
+import { userRoutes } from "./routes/create-user";
 import { env } from "hono/adapter";
 import { Context } from "hono";
 
