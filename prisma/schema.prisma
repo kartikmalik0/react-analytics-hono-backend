@@ -18,32 +18,109 @@ model User {
 }
 
 model Project {
-  id        String     @id @default(uuid())
-  name      String
-  createdAt DateTime   @default(now())
-  owner     User       @relation(fields: [ownerId], references: [id])
-  ownerId   String
-  analytics Analytics?
+  id           String         @id @default(uuid())
+  name         String
+  createdAt    DateTime       @default(now())
+  owner        User           @relation(fields: [ownerId], references: [id])
+  ownerId      String
+  pageViews    PageView[]
+  visitors     Visitor[]
+  locations    Location[]
+  dailyStats   DailyStats[]
+  referrers    Referrer[]
+  customEvents CustomEvent[]
+
+  @@unique([ownerId, name])
 }
 
-model Analytics {
+model PageView {
+  id        String   @id @default(uuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id])
+  url       String
+  timestamp DateTime @default(now())
+
+  @@index([projectId])
+  @@index([url])
+  @@index([timestamp])
+}
+
+model Visitor {
   id               String   @id @default(uuid())
-  url              String
+  projectId        String
+  project          Project  @relation(fields: [projectId], references: [id])
+  visitorId        String   // Unique identifier for the visitor (e.g., hashed IP + user agent)
   userAgent        String
   language         String
-  referrers        String[]
-  platform         String
+  platform         Platform
   screenResolution String
   colorDepth       Int
-  timestamp        DateTime @default(now())
-  latitude         Float?
-  longitude        Float?
-  accuracy         Float?
-  ip               String?
-  cities           String[] // Array of cities
-  regions          String[] // Array of regions
-  countries        String[] // Array of countries
-  views            Int      @default(0) // Field to count views
-  project          Project  @relation(fields: [projectId], references: [id])
-  projectId        String   @unique
+  firstVisit       DateTime @default(now())
+  lastVisit        DateTime @default(now())
+
+  @@unique([projectId, visitorId])
+  @@index([projectId])
+  @@index([lastVisit])
+}
+
+model Location {
+  id        String   @id @default(uuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id])
+  visitorId String
+  ip        String?
+  latitude  Float?
+  longitude Float?
+  accuracy  Float?
+  city      String?
+  region    String?
+  country   String?
+  timestamp DateTime @default(now())
+
+  @@index([projectId])
+  @@index([country])
+  @@index([timestamp])
+}
+
+model DailyStats {
+  id        String   @id @default(uuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id])
+  date      DateTime
+  views     Int      @default(0)
+  visitors  Int      @default(0)
+  newVisitors Int    @default(0)
+
+  @@unique([projectId, date])
+  @@index([date])
+}
+
+model Referrer {
+  id        String   @id @default(uuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id])
+  url       String
+  count     Int      @default(0)
+
+  @@unique([projectId, url])
+  @@index([url])
+}
+
+model CustomEvent {
+  id        String   @id @default(uuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id])
+  name      String
+  count     Int      @default(0)
+  timestamp DateTime @default(now())
+
+  @@unique([projectId, name])
+  @@index([name])
+  @@index([timestamp])
+}
+
+enum Platform {
+  DESKTOP
+  MOBILE
+  TABLET
 }
